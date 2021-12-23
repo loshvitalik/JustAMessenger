@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using JustAMessenger.Models;
-using Newtonsoft.Json;
 
 namespace JustAMessenger
 {
@@ -60,13 +57,13 @@ namespace JustAMessenger
 			{
 				Clients.Caller.contactRequestAdded(receiverName, false);
 				return;
-			};
+			}
 			var contactRelationItem = context.ContactRelations.FirstOrDefault(r => r.InitiatorUserId == senderId && r.ReceiverUserId == receiverContact.Id);
 			if (contactRelationItem != null)
 			{
 				Clients.Caller.contactRequestAdded(receiverName, false);
 				return;
-			};
+			}
 			var newContactRelationItem = new ContactRelation(senderId, receiverContact.Id);
 			context.ContactRelations.Add(newContactRelationItem);
 			context.SaveChanges();
@@ -92,14 +89,6 @@ namespace JustAMessenger
 			context.ContactRelations.Remove(contactRelationEntity);
 			context.SaveChanges();
 			Clients.Caller.contactRequestFulfilled();
-		}
-
-		public void SaveMessagesToGDrive(string currentUserId, string currentContactId)
-		{
-			var messages = context.Messages.Where(m =>
-				(m.SenderId == currentUserId && m.ReceiverId == currentContactId) ||
-				(m.ReceiverId == currentUserId && m.SenderId == currentContactId)).OrderBy(m => m.Timestamp).ToList();
-			var serializedMessages = JsonConvert.SerializeObject(messages);
 		}
 	}
 }
