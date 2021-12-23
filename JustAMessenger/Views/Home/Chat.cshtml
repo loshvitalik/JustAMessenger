@@ -19,7 +19,6 @@
     </aside>
     <main class="main" role="main">
         <h3>Сообщения</h3>
-        <input type="button" id="export-button" value="Сохранить в Google Drive"/>
         <ul id="discussion">
         </ul>
         <div class="container" id="chat-controls">
@@ -153,10 +152,7 @@
                     else
                         chat.server.rejectContactRequest(currentUserId, requestId);
                 }
-
-                $('#export-button').click(function() {
-                    chat.server.saveMessagesToGDrive(currentUserId, currentContactId);
-                });
+                
 
             });
         </script>
